@@ -4,7 +4,7 @@
 
     <div class="modal-content">
       <NcTextField
-        :value.sync="url"
+        v-model="url"
         :label="t('transfer', 'Link')"
         :label-visible="true"
         placeholder="https://example.com/file.txt">
@@ -12,7 +12,7 @@
 
       <div class="row">
         <NcTextField
-          :value.sync="chosenName"
+          v-model="chosenName"
           :label="t('transfer', 'File name')"
           :label-visible="true"
           :placeholder="defaults.name">
@@ -20,7 +20,7 @@
         .
         <NcTextField
           class="short"
-          :value.sync="chosenExtension"
+          v-model="chosenExtension"
           :label="t('transfer', 'Extension')"
           :label-visible="true"
           :placeholder="defaults.extension">
@@ -40,7 +40,7 @@
         </NcSelect>
 
         <NcTextField
-          :value.sync="hash"
+          v-model="hash"
           :label="t('transfer', 'Checksum')">
         </NcTextField>
       </div>

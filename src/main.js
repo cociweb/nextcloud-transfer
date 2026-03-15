@@ -1,23 +1,23 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import { addNewFileMenuEntry, Permission } from '@nextcloud/files'
 import { translate, translatePlural } from '@nextcloud/l10n'
 import Transfer from './Transfer.vue'
 import TransferSvg from '@mdi/svg/svg/cloud-upload.svg'
 
-Vue.prototype.t = translate
-Vue.prototype.n = translatePlural
-
 const vueMountElement = document.createElement('div')
 document.body.append(vueMountElement)
 
-const vueMount = new Vue({
-	el: vueMountElement,
-	render: h => h(Transfer)
-})
+const app = createApp(Transfer)
+
+// Make translation functions globally available
+app.config.globalProperties.t = translate
+app.config.globalProperties.n = translatePlural
+
+const vueMount = app.mount(vueMountElement)
 
 addNewFileMenuEntry({
 	id: 'transfer',
-	displayName: t('transfer', 'Upload by link'),
+	displayName: translate('transfer', 'Upload by link'),
 	iconSvgInline: TransferSvg,
 	order: -1,
 
@@ -25,6 +25,6 @@ addNewFileMenuEntry({
 	if: context => (context.permissions & Permission.CREATE) !== 0,
 
 	async handler(context, content) {
-		vueMount.$children[0].open(context)
+		vueMount.open(context)
 	}
 })
